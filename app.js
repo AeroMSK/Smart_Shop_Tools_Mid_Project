@@ -189,19 +189,24 @@ const applyCoupon = () => {
   const couponInput = document.getElementById("coupon-input")
   const code = couponInput.value.trim().toUpperCase()
 
-  if (code === "SHALMANMUSA10") {
+  if (code === "SMART10") {
     couponApplied = true
     alert("Coupon applied! 10% discount activated.")
     couponInput.value = ""
     updateCartSummary()
   } else {
-    alert("Invalid coupon code. Try SHALMANMUSA10!")
+    alert("Invalid coupon code. Try SMART10!")
   }
 }
 
 // ========== BALANCE FUNCTIONALITY ==========
 const updateBalanceDisplay = () => {
   document.getElementById("balance-display").textContent = currentBalance
+  // Update mobile menu balance if it exists
+  const mobileBalance = document.getElementById("balance-display-mobile")
+  if (mobileBalance) {
+    mobileBalance.textContent = currentBalance
+  }
 }
 
 const addMoney = () => {
