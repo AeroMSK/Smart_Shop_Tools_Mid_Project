@@ -1,12 +1,19 @@
 // ========== GLOBAL STATE ==========
+// Store all products fetched from API
 let products = []
+// Store items added to cart
 let cart = []
+// User's current balance (persisted in localStorage)
 let currentBalance = localStorage.getItem("userBalance") ? Number.parseInt(localStorage.getItem("userBalance")) : 1000
+// Track current banner image index
 let currentBannerIndex = 0
+// Track current review index
 let currentReviewIndex = 0
+// Track if coupon has been applied
 let couponApplied = false
 
-// Banner images (promotional images)
+// ========== BANNER IMAGES ==========
+// Array of promotional banner images
 const bannerImages = [
   "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&h=400&fit=crop",
   "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1200&h=400&fit=crop",
@@ -14,7 +21,8 @@ const bannerImages = [
   "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=1200&h=400&fit=crop",
 ]
 
-// Dummy reviews data
+// ========== REVIEWS DATA ==========
+// Dummy customer reviews
 const reviews = [
   { name: "Ahmed Khan", comment: "Great products and fast delivery!", rating: 5, date: "2024-10-20" },
   { name: "Fatima Ali", comment: "Excellent quality and customer service.", rating: 5, date: "2024-10-18" },
@@ -24,6 +32,7 @@ const reviews = [
 ]
 
 // ========== INITIALIZATION ==========
+// Run when page loads
 document.addEventListener("DOMContentLoaded", () => {
   initializeBanner()
   loadProducts()
@@ -34,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 // ========== BANNER FUNCTIONALITY ==========
+// Initialize banner with first image and auto-slide
 const initializeBanner = () => {
   const bannerImg = document.getElementById("banner-img")
   bannerImg.src = bannerImages[0]
@@ -45,6 +55,7 @@ const initializeBanner = () => {
   }, 5000)
 }
 
+// Update banner image and indicator
 const updateBanner = () => {
   const bannerImg = document.getElementById("banner-img")
   bannerImg.src = bannerImages[currentBannerIndex]
@@ -52,8 +63,8 @@ const updateBanner = () => {
 }
 
 // ========== PRODUCTS FUNCTIONALITY ==========
+// Fetch products from FakeStore API
 const loadProducts = () => {
-  // Fetch products from FakeStore API
   fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
     .then((data) => {
@@ -63,23 +74,24 @@ const loadProducts = () => {
     .catch((error) => console.error("Error loading products:", error))
 }
 
+// Display products in grid
 const displayProducts = (productsToDisplay) => {
   const container = document.getElementById("products-container")
-  container.innerHTML = "" // Clear existing products
+  container.innerHTML = ""
 
   productsToDisplay.forEach((product) => {
     const productCard = document.createElement("div")
     productCard.classList.add("bg-white", "rounded-xl", "shadow-md", "overflow-hidden", "hover:shadow-lg", "transition")
 
     productCard.innerHTML = `
-            <img src="${product.image}" alt="${product.title}" class="w-full h-48 object-cover">
-            <div class="p-4">
-                <h3 class="font-semibold text-sm line-clamp-2 mb-2">${product.title}</h3>
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-lg font-bold text-blue-600">${product.price} BDT</span>
-                    <span class="text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded">⭐ ${product.rating.rate}</span>
+            <img src="${product.image}" alt="${product.title}" class="w-full h-40 md:h-48 object-cover">
+            <div class="p-3 md:p-4">
+                <h3 class="font-semibold text-xs md:text-sm line-clamp-2 mb-2">${product.title}</h3>
+                <div class="flex justify-between items-center mb-3 gap-2">
+                    <span class="text-base md:text-lg font-bold text-blue-600">${product.price} BDT</span>
+                    <span class="text-xs md:text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded">⭐ ${product.rating.rate}</span>
                 </div>
-                <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-semibold add-to-cart-btn" data-product-id="${product.id}">
+                <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-semibold text-xs md:text-sm add-to-cart-btn" data-product-id="${product.id}">
                     Add to Cart
                 </button>
             </div>
@@ -95,6 +107,7 @@ const displayProducts = (productsToDisplay) => {
 }
 
 // ========== CART FUNCTIONALITY ==========
+// Add product to cart or increase quantity if already exists
 const addToCart = (e) => {
   const productId = Number.parseInt(e.target.dataset.productId)
   const product = products.find((p) => p.id === productId)
@@ -121,12 +134,14 @@ const addToCart = (e) => {
   alert(`${product.title} added to cart!`)
 }
 
+// Remove item from cart
 const removeFromCart = (productId) => {
   cart = cart.filter((item) => item.id !== productId)
   saveCartToStorage()
   updateCartDisplay()
 }
 
+// Update cart display in sidebar
 const updateCartDisplay = () => {
   const cartItemsContainer = document.getElementById("cart-items")
   const cartCountDisplay = document.getElementById("cart-count")
@@ -135,21 +150,21 @@ const updateCartDisplay = () => {
   cartItemsContainer.innerHTML = ""
 
   if (cart.length === 0) {
-    cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center">Your cart is empty</p>'
+    cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center text-sm">Your cart is empty</p>'
     updateCartSummary()
     return
   }
 
   cart.forEach((item) => {
     const cartItem = document.createElement("div")
-    cartItem.classList.add("flex", "justify-between", "items-center", "bg-gray-100", "p-3", "rounded")
+    cartItem.classList.add("flex", "justify-between", "items-center", "bg-gray-100", "p-3", "rounded", "text-sm")
 
     cartItem.innerHTML = `
             <div class="flex-1">
-                <p class="font-semibold text-sm">${item.title}</p>
-                <p class="text-sm text-gray-600">${item.price} BDT × ${item.quantity}</p>
+                <p class="font-semibold text-xs md:text-sm">${item.title}</p>
+                <p class="text-xs md:text-sm text-gray-600">${item.price} BDT × ${item.quantity}</p>
             </div>
-            <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition remove-btn" data-product-id="${item.id}">
+            <button class="bg-red-500 text-white px-2 md:px-3 py-1 rounded hover:bg-red-600 transition remove-btn text-xs md:text-sm" data-product-id="${item.id}">
                 Remove
             </button>
         `
@@ -167,6 +182,7 @@ const updateCartDisplay = () => {
   updateCartSummary()
 }
 
+// Calculate and display cart totals
 const updateCartSummary = () => {
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const delivery = cart.length > 0 ? 50 : 0
@@ -185,6 +201,7 @@ const updateCartSummary = () => {
 }
 
 // ========== COUPON FUNCTIONALITY ==========
+// Apply coupon code for discount
 const applyCoupon = () => {
   const couponInput = document.getElementById("coupon-input")
   const code = couponInput.value.trim().toUpperCase()
@@ -200,15 +217,16 @@ const applyCoupon = () => {
 }
 
 // ========== BALANCE FUNCTIONALITY ==========
+// Update balance display in navbar and mobile menu
 const updateBalanceDisplay = () => {
   document.getElementById("balance-display").textContent = currentBalance
-  // Update mobile menu balance if it exists
   const mobileBalance = document.getElementById("balance-display-mobile")
   if (mobileBalance) {
     mobileBalance.textContent = currentBalance
   }
 }
 
+// Add money to user balance
 const addMoney = () => {
   currentBalance += 1000
   localStorage.setItem("userBalance", currentBalance)
@@ -216,6 +234,7 @@ const addMoney = () => {
   alert("1000 BDT added to your balance!")
 }
 
+// Process checkout
 const checkout = () => {
   if (cart.length === 0) {
     alert("Your cart is empty!")
@@ -243,20 +262,22 @@ const checkout = () => {
 }
 
 // ========== REVIEWS FUNCTIONALITY ==========
+// Load and display first review
 const loadReviews = () => {
   displayReview(0)
 }
 
+// Display specific review
 const displayReview = (index) => {
   const review = reviews[index]
   const reviewContent = document.getElementById("review-content")
 
   reviewContent.innerHTML = `
         <div>
-            <p class="text-2xl font-bold mb-2">"${review.comment}"</p>
+            <p class="text-lg md:text-2xl font-bold mb-2 line-clamp-3">"${review.comment}"</p>
             <p class="text-yellow-500 text-lg mb-3">${"⭐".repeat(review.rating)}</p>
-            <p class="font-semibold text-lg">${review.name}</p>
-            <p class="text-gray-500 text-sm">${review.date}</p>
+            <p class="font-semibold text-base md:text-lg">${review.name}</p>
+            <p class="text-gray-500 text-xs md:text-sm">${review.date}</p>
         </div>
     `
 
@@ -264,6 +285,7 @@ const displayReview = (index) => {
 }
 
 // ========== SEARCH & FILTER FUNCTIONALITY ==========
+// Search products by title
 const searchProducts = () => {
   const searchTerm = document.getElementById("search-input").value.toLowerCase()
 
@@ -273,6 +295,7 @@ const searchProducts = () => {
 }
 
 // ========== CONTACT FORM FUNCTIONALITY ==========
+// Handle contact form submission
 const submitContactForm = (e) => {
   e.preventDefault()
 
@@ -300,6 +323,7 @@ const submitContactForm = (e) => {
 }
 
 // ========== CART SIDEBAR TOGGLE ==========
+// Toggle cart sidebar visibility
 const toggleCart = () => {
   const sidebar = document.getElementById("cart-sidebar")
   const overlay = document.getElementById("cart-overlay")
@@ -309,10 +333,12 @@ const toggleCart = () => {
 }
 
 // ========== LOCAL STORAGE FUNCTIONS ==========
+// Save cart to browser storage
 const saveCartToStorage = () => {
   localStorage.setItem("smartshopCart", JSON.stringify(cart))
 }
 
+// Load cart from browser storage
 const loadCartFromStorage = () => {
   const savedCart = localStorage.getItem("smartshopCart")
   if (savedCart) {
@@ -322,6 +348,7 @@ const loadCartFromStorage = () => {
 }
 
 // ========== NAVBAR ACTIVE LINK TRACKING ==========
+// Update active nav link based on scroll position
 const updateActiveNavLink = () => {
   const sections = ["home", "products", "reviews", "contact"]
   const navLinks = document.querySelectorAll(".nav-link")
@@ -341,6 +368,7 @@ const updateActiveNavLink = () => {
 }
 
 // ========== EVENT LISTENERS ==========
+// Setup all event listeners
 const setupEventListeners = () => {
   // Banner controls
   document.getElementById("prev-banner").addEventListener("click", () => {
