@@ -206,13 +206,13 @@ const applyCoupon = () => {
   const couponInput = document.getElementById("coupon-input")
   const code = couponInput.value.trim().toUpperCase()
 
-  if (code === "SMART10") {
+  if (code === "SHALMANMUSA10") {
     couponApplied = true
     alert("Coupon applied! 10% discount activated.")
     couponInput.value = ""
     updateCartSummary()
   } else {
-    alert("Invalid coupon code. Try SMART10!")
+    alert("Invalid coupon code. Try SHALMANMUSA10!")
   }
 }
 
