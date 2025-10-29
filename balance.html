@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartShop - Add Money</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-blue-600">SmartShop</a>
+            <a href="index.html" class="text-blue-600 hover:text-blue-700 font-semibold">← Back to Store</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-2xl mx-auto px-4 py-8">
+        
+        <!-- Current Balance Card -->
+        <div class="bg-gradient-to-r from-blue-600 to-emerald-600 text-white rounded-xl shadow-lg p-6 md:p-8 mb-8">
+            <p class="text-sm md:text-base opacity-90 mb-2">Your Current Balance</p>
+            <h1 class="text-4xl md:text-5xl font-bold" id="current-balance">1000 BDT</h1>
+        </div>
+
+        <!-- Add Money Section -->
+        <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6">Add Money to Your Account</h2>
+            
+            <!-- Amount Input -->
+            <div class="mb-6">
+                <label class="block text-sm font-semibold mb-2 text-gray-700">Enter Amount (BDT)</label>
+                <input 
+                    type="number" 
+                    id="amount-input" 
+                    placeholder="Enter amount" 
+                    min="100" 
+                    step="100"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+                >
+            </div>
+
+            <!-- Payment Methods -->
+            <h3 class="text-lg font-semibold mb-4">Select Payment Method</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                
+                <!-- Bkash -->
+<button class="payment-method-btn bg-white border-2 border-gray-300 rounded-lg p-4 hover:border-pink-500 hover:bg-pink-50 transition flex flex-col items-center justify-center" data-method="bkash">
+    <div class="w-16 h-16 flex items-center justify-center mb-2">
+        <img src="images/bkash.png" alt="Bkash Logo" class="max-h-full max-w-full object-contain">
+    </div>
+    <p class="font-semibold text-gray-800">Bkash</p>
+    <p class="text-xs text-gray-500">Mobile Banking</p>
+</button>
+
+<!-- Nagad -->
+<button class="payment-method-btn bg-white border-2 border-gray-300 rounded-lg p-4 hover:border-orange-500 hover:bg-orange-50 transition flex flex-col items-center justify-center" data-method="nagad">
+    <div class="w-16 h-16 flex items-center justify-center mb-2">
+        <img src="images/nagad.png" alt="Nagad Logo" class="max-h-full max-w-full object-contain">
+    </div>
+    <p class="font-semibold text-gray-800">Nagad</p>
+    <p class="text-xs text-gray-500">Digital Payment</p>
+</button>
+
+<!-- Rocket -->
+<button class="payment-method-btn bg-white border-2 border-gray-300 rounded-lg p-4 hover:border-red-500 hover:bg-red-50 transition flex flex-col items-center justify-center" data-method="rocket">
+    <div class="w-16 h-16 flex items-center justify-center mb-2">
+        <img src="images/rocket.jpeg" alt="Rocket Logo" class="max-h-full max-w-full object-contain">
+    </div>
+    <p class="font-semibold text-gray-800">Rocket</p>
+    <p class="text-xs text-gray-500">Mobile Money</p>
+</button>
+
+<!-- Bank Card -->
+<button class="payment-method-btn bg-white border-2 border-gray-300 rounded-lg p-4 hover:border-blue-500 hover:bg-blue-50 transition flex flex-col items-center justify-center" data-method="bank">
+    <div class="w-16 h-16 flex items-center justify-center mb-2">
+        <img src="images/bank.png" alt="Bank Logo" class="max-h-full max-w-full object-contain">
+    </div>
+    <p class="font-semibold text-gray-800">Bank Card</p>
+    <p class="text-xs text-gray-500">Debit/Credit Card</p>
+</button>
+
+            </div>
+
+            <!-- Selected Method Display -->
+            <div id="payment-form" class="hidden bg-gray-50 rounded-lg p-4 md:p-6 mb-6">
+                <h4 class="font-semibold mb-4" id="payment-method-title">Payment Details</h4>
+                
+                <!-- Bkash/Nagad/Rocket Form -->
+                <div id="mobile-payment-form" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Mobile Number</label>
+                        <input type="text" id="mobile-number" placeholder="01XXXXXXXXX" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">PIN</label>
+                        <input type="password" id="mobile-pin" placeholder="Enter PIN" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <!-- Bank Card Form -->
+                <div id="bank-payment-form" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Card Number</label>
+                        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">PIN</label>
+                        <input type="password" id="card-pin" placeholder="Enter PIN" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button id="submit-payment" class="w-full bg-emerald-600 text-white py-3 rounded-lg font-semibold hover:bg-emerald-700 transition mt-4">
+                    Add Money
+                </button>
+            </div>
+        </div>
+
+        <!-- Info Box
+        <div class="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-4 md:p-6">
+            <p class="text-sm md:text-base text-gray-700">
+                <strong>💡 Note:</strong> This is a demo payment system. Enter any valid details to proceed. Your balance will be updated immediately.
+            </p>
+        </div> -->
+    </main>
+
+    <!-- Script -->
+    <script>
+        // ========== BALANCE PAGE FUNCTIONALITY ==========
+
+        // Get elements
+        const amountInput = document.getElementById("amount-input");
+        const paymentMethodBtns = document.querySelectorAll(".payment-method-btn");
+        const paymentForm = document.getElementById("payment-form");
+        const mobilePaymentForm = document.getElementById("mobile-payment-form");
+        const bankPaymentForm = document.getElementById("bank-payment-form");
+        const submitPaymentBtn = document.getElementById("submit-payment");
+        const currentBalanceDisplay = document.getElementById("current-balance");
+
+        let selectedMethod = null;
+        let currentBalance = localStorage.getItem("userBalance") ? Number.parseInt(localStorage.getItem("userBalance")) : 1000;
+
+        // Update balance display on page load
+        currentBalanceDisplay.textContent = currentBalance + " BDT";
+
+        // Handle payment method selection
+        paymentMethodBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                // Remove active state from all buttons
+                paymentMethodBtns.forEach((b) => {
+                    b.classList.remove("border-blue-500", "bg-blue-50");
+                    b.classList.add("border-gray-300", "bg-white");
+                });
+
+                // Add active state to clicked button
+                btn.classList.add("border-blue-500", "bg-blue-50");
+                btn.classList.remove("border-gray-300", "bg-white");
+
+                selectedMethod = btn.dataset.method;
+
+                // Show payment form
+                paymentForm.classList.remove("hidden");
+
+                // Show appropriate form based on method
+                if (selectedMethod === "bkash" || selectedMethod === "nagad" || selectedMethod === "rocket") {
+                    mobilePaymentForm.classList.remove("hidden");
+                    bankPaymentForm.classList.add("hidden");
+                    document.getElementById("payment-method-title").textContent = `${selectedMethod.charAt(0).toUpperCase() + selectedMethod.slice(1)} Payment`;
+                } else if (selectedMethod === "bank") {
+                    bankPaymentForm.classList.remove("hidden");
+                    mobilePaymentForm.classList.add("hidden");
+                    document.getElementById("payment-method-title").textContent = "Bank Card Payment";
+                }
+            });
+        });
+
+        // Handle payment submission
+        submitPaymentBtn.addEventListener("click", () => {
+            const amount = Number.parseInt(amountInput.value);
+
+            // Validation
+            if (!amount || amount < 100) {
+                alert("Please enter a valid amount (minimum 100 BDT)");
+                return;
+            }
+
+            if (!selectedMethod) {
+                alert("Please select a payment method");
+                return;
+            }
+
+            // Validate payment details
+            if (selectedMethod === "bkash" || selectedMethod === "nagad" || selectedMethod === "rocket") {
+                const mobileNumber = document.getElementById("mobile-number").value.trim();
+                const pin = document.getElementById("mobile-pin").value.trim();
+
+                if (!mobileNumber || !pin) {
+                    alert("Please enter mobile number and PIN");
+                    return;
+                }
+            } else if (selectedMethod === "bank") {
+                const cardNumber = document.getElementById("card-number").value.trim();
+                const pin = document.getElementById("card-pin").value.trim();
+
+                if (!cardNumber || !pin) {
+                    alert("Please enter card number and PIN");
+                    return;
+                }
+            }
+
+            // Process payment
+            currentBalance += amount;
+            localStorage.setItem("userBalance", currentBalance);
+
+            alert(`Payment successful! ${amount} BDT added to your account.`);
+
+            // Reset form
+            amountInput.value = "";
+            document.getElementById("mobile-number").value = "";
+            document.getElementById("mobile-pin").value = "";
+            document.getElementById("card-number").value = "";
+            document.getElementById("card-pin").value = "";
+            paymentForm.classList.add("hidden");
+            paymentMethodBtns.forEach((b) => {
+                b.classList.remove("border-blue-500", "bg-blue-50");
+                b.classList.add("border-gray-300", "bg-white");
+            });
+            selectedMethod = null;
+
+            // Update balance display
+            currentBalanceDisplay.textContent = currentBalance + " BDT";
+        });
+    </script>
+</body>
+</html>
