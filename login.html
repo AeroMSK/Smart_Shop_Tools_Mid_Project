@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartShop - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- added Times New Roman font styling -->
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+</head>
+<!-- Updated body with modern gradient and glassmorphism -->
+<body class="bg-gradient-to-br from-indigo-50 via-slate-50 to-rose-50 flex items-center justify-center min-h-screen p-4">
+    <div id="alert-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+    <div class="w-full max-w-md bg-white/70 backdrop-blur-md rounded-2xl shadow-2xl p-10 border border-slate-200/50">
+        <h1 class="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-rose-500 bg-clip-text text-transparent mb-2 text-center">SmartShop</h1>
+        <p class="text-slate-600 text-center mb-10 font-medium">Your trusted online store</p>
+        
+        <!-- Updated tabs with modern styling -->
+        <div class="flex gap-4 mb-8 bg-slate-100 p-1 rounded-lg">
+            <button id="login-tab" class="flex-1 py-3 bg-gradient-to-r from-indigo-600 to-rose-500 text-white rounded-lg font-bold transition-all duration-300 hover:shadow-lg active:scale-95">Login</button>
+            <button id="signup-tab" class="flex-1 py-3 bg-transparent text-slate-700 rounded-lg font-bold hover:bg-white/50 transition-all duration-300">Signup</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form id="login-form" class="space-y-5">
+            <div>
+                <label class="block text-sm font-bold mb-3 text-slate-700">Email</label>
+                <input type="email" id="login-email" placeholder="Enter email" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/70 backdrop-blur-sm" required>
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-3 text-slate-700">Password</label>
+                <input type="password" id="login-password" placeholder="Enter password" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/70 backdrop-blur-sm" required>
+            </div>
+            <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-rose-500 text-white py-3 rounded-lg font-bold hover:shadow-lg active:scale-95 transition-all duration-200 hover:scale-105">Login</button>
+        </form>
+
+        <!-- SIGNUP FORM -->
+        <form id="signup-form" class="space-y-5 hidden">
+            <div>
+                <label class="block text-sm font-bold mb-3 text-slate-700">Name</label>
+                <input type="text" id="signup-name" placeholder="Enter name" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all bg-white/70 backdrop-blur-sm" required>
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-3 text-slate-700">Email</label>
+                <input type="email" id="signup-email" placeholder="Enter email" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all bg-white/70 backdrop-blur-sm" required>
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-3 text-slate-700">Password</label>
+                <input type="password" id="signup-password" placeholder="Create password" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all bg-white/70 backdrop-blur-sm" required>
+            </div>
+            <button type="submit" class="w-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white py-3 rounded-lg font-bold hover:shadow-lg active:scale-95 transition-all duration-200 hover:scale-105">Signup</button>
+        </form>
+
+        <p class="text-center text-slate-600 text-sm mt-8 font-medium">Any email and password works</p>
+        <p class="text-center mt-6"><a href="index.html" class="text-indigo-600 hover:text-rose-500 font-bold transition-colors duration-300">← Back to Store</a></p>
+    </div>
+
+    <script>
+        function showAlert(message, type = 'success') {
+          var alertContainer = document.getElementById('alert-container')
+          var bgColor = type === 'success' ? 'bg-emerald-500' : 'bg-red-500'
+          
+          var alertDiv = document.createElement('div')
+          alertDiv.className = bgColor + ' text-white px-6 py-4 rounded-xl shadow-xl transform transition-all duration-500 opacity-0 translate-y-2'
+          alertDiv.textContent = message
+          
+          alertContainer.appendChild(alertDiv)
+          
+          setTimeout(() => {
+            alertDiv.classList.remove("opacity-0", "translate-y-2")
+            alertDiv.classList.add("opacity-100", "translate-y-0")
+          }, 10)
+
+          setTimeout(() => {
+            alertDiv.classList.add("opacity-0", "translate-y-2")
+            setTimeout(() => alertDiv.remove(), 500)
+          }, 3500)
+        }
+
+        document.getElementById("login-tab").addEventListener("click", function() {
+            document.getElementById("login-form").classList.remove("hidden");
+            document.getElementById("signup-form").classList.add("hidden");
+            this.classList.add("bg-gradient-to-r", "from-indigo-600", "to-rose-500", "text-white");
+            this.classList.remove("bg-transparent", "text-slate-700");
+            document.getElementById("signup-tab").classList.remove("bg-gradient-to-r", "from-teal-600", "to-emerald-600", "text-white");
+            document.getElementById("signup-tab").classList.add("bg-transparent", "text-slate-700");
+        });
+
+        document.getElementById("signup-tab").addEventListener("click", function() {
+            document.getElementById("signup-form").classList.remove("hidden");
+            document.getElementById("login-form").classList.add("hidden");
+            this.classList.add("bg-gradient-to-r", "from-teal-600", "to-emerald-600", "text-white");
+            this.classList.remove("bg-transparent", "text-slate-700");
+            document.getElementById("login-tab").classList.remove("bg-gradient-to-r", "from-indigo-600", "to-rose-500", "text-white");
+            document.getElementById("login-tab").classList.add("bg-transparent", "text-slate-700");
+        });
+
+        document.getElementById("login-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            var email = document.getElementById("login-email").value.trim();
+            if (!email) return;
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("userEmail", email);
+            localStorage.setItem("userName", email.split("@")[0]);
+            showAlert("Login Successful! Welcome to SmartShop.", "success");
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 1000);
+        });
+
+        document.getElementById("signup-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            var name = document.getElementById("signup-name").value.trim();
+            var email = document.getElementById("signup-email").value.trim();
+            if (!name || !email) return;
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("userEmail", email);
+            localStorage.setItem("userName", name);
+            showAlert("Signup Successful! Welcome to SmartShop.", "success");
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

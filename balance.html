@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartShop - Balance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- added Times New Roman font styling -->
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+</head>
+<!-- Updated body with modern background -->
+<body class="bg-gradient-to-br from-slate-50 to-indigo-50">
+    <!-- Updated navbar with glassmorphism -->
+    <nav class="bg-white/70 backdrop-blur-md shadow-md sticky top-0 border-b border-slate-200/50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-rose-500 bg-clip-text text-transparent">SmartShop</h1>
+            <a href="index.html" class="text-indigo-600 font-bold hover:text-rose-500 transition-colors duration-300">← Back to Store</a>
+        </div>
+    </nav>
+
+    <div id="alert-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+    <main class="max-w-2xl mx-auto px-4 py-12">
+        <!-- Updated balance card with gradient and glassmorphism -->
+        <div class="bg-gradient-to-r from-indigo-600 via-teal-500 to-rose-500 text-white rounded-2xl shadow-2xl p-10 mb-10 hover:shadow-3xl transition-shadow duration-300">
+            <p class="text-sm opacity-90 mb-3 font-semibold uppercase tracking-wide">Your Current Balance</p>
+            <h2 class="text-6xl font-bold" id="current-balance">1000 BDT</h2>
+        </div>
+
+        <!-- Updated form card with modern styling -->
+        <div class="bg-white/70 backdrop-blur-md rounded-2xl shadow-xl p-10 border border-slate-200/50">
+            <h3 class="text-3xl font-bold mb-8 text-slate-900">Add Money</h3>
+            
+            <div class="mb-8">
+                <label class="block text-sm font-bold mb-3 text-slate-700">Amount (BDT)</label>
+                <input type="number" id="amount-input" placeholder="Enter amount" min="100" step="100" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/70 backdrop-blur-sm">
+            </div>
+
+            <h4 class="text-lg font-bold mb-6 text-slate-900">Payment Method</h4>
+<!-- Updated payment buttons with images instead of emojis -->
+<div class="grid grid-cols-2 gap-5 mb-8">
+    <button class="payment-btn border-2 border-slate-300 rounded-xl p-6 hover:border-indigo-500 hover:bg-indigo-50 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95" data-method="bkash">
+        <div class="flex justify-center mb-3">
+            <img src="images/bkash.png" alt="Bkash" class="w-16 h-16 object-contain">
+        </div>
+        <p class="font-bold text-slate-900">Bkash</p>
+    </button>
+
+    <button class="payment-btn border-2 border-slate-300 rounded-xl p-6 hover:border-teal-500 hover:bg-teal-50 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95" data-method="nagad">
+        <div class="flex justify-center mb-3">
+            <img src="images/nagad.png" alt="Nagad" class="w-16 h-16 object-contain">
+        </div>
+        <p class="font-bold text-slate-900">Nagad</p>
+    </button>
+
+    <button class="payment-btn border-2 border-slate-300 rounded-xl p-6 hover:border-rose-500 hover:bg-rose-50 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95" data-method="rocket">
+        <div class="flex justify-center mb-3">
+            <img src="images/rocket.jpeg" alt="Rocket" class="w-16 h-16 object-contain">
+        </div>
+        <p class="font-bold text-slate-900">Rocket</p>
+    </button>
+
+    <button class="payment-btn border-2 border-slate-300 rounded-xl p-6 hover:border-cyan-500 hover:bg-cyan-50 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95" data-method="bank">
+        <div class="flex justify-center mb-3">
+            <img src="images/bank.png" alt="Bank Card" class="w-16 h-16 object-contain">
+        </div>
+        <p class="font-bold text-slate-900">Bank Card</p>
+    </button>
+</div>
+
+
+            <!-- Updated payment form with modern styling -->
+            <div id="payment-form" class="bg-gradient-to-br from-slate-50 to-indigo-50 rounded-xl p-8 hidden border border-slate-200">
+                <h4 class="font-bold mb-6 text-slate-900 text-lg" id="payment-title">Payment Details</h4>
+                
+                <div id="mobile-form" class="space-y-5 hidden">
+                    <div>
+                        <label class="block text-sm font-bold mb-3 text-slate-700">Mobile Number</label>
+                        <input type="text" id="mobile-number" placeholder="01XXXXXXXXX" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/70">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-3 text-slate-700">PIN</label>
+                        <input type="password" id="mobile-pin" placeholder="Enter PIN" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/70">
+                    </div>
+                </div>
+
+                <div id="bank-form" class="space-y-5 hidden">
+                    <div>
+                        <label class="block text-sm font-bold mb-3 text-slate-700">Card Number</label>
+                        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/70">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-3 text-slate-700">PIN</label>
+                        <input type="password" id="card-pin" placeholder="Enter PIN" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all bg-white/70">
+                    </div>
+                </div>
+
+                <button id="submit-payment" class="w-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white py-3 rounded-lg font-bold hover:shadow-lg active:scale-95 transition-all duration-200 hover:scale-105 mt-6">Add Money</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function showAlert(message, type = 'success') {
+          var alertContainer = document.getElementById('alert-container')
+          var bgColor = type === 'success' ? 'bg-emerald-500' : 'bg-red-500'
+          
+          var alertDiv = document.createElement('div')
+          alertDiv.className = bgColor + ' text-white px-6 py-4 rounded-xl shadow-xl transform transition-all duration-500 ease-in-out opacity-0 translate-y-2'
+          alertDiv.textContent = message
+          
+          alertContainer.appendChild(alertDiv)
+          
+          setTimeout(() => {
+            alertDiv.classList.remove("opacity-0", "translate-y-2")
+            alertDiv.classList.add("opacity-100", "translate-y-0")
+          }, 10)
+
+          setTimeout(() => {
+            alertDiv.classList.add("opacity-0", "translate-y-2")
+            setTimeout(() => alertDiv.remove(), 500)
+          }, 3500)
+        }
+
+        var currentBalance = localStorage.getItem("userBalance") ? parseInt(localStorage.getItem("userBalance")) : 1000;
+        var selectedMethod = null;
+
+        document.getElementById("current-balance").textContent = currentBalance + " BDT";
+
+        var paymentBtns = document.querySelectorAll(".payment-btn");
+        paymentBtns.forEach(function(btn) {
+            btn.addEventListener("click", function() {
+                paymentBtns.forEach(function(b) { b.classList.remove("border-indigo-500", "border-teal-500", "border-rose-500", "border-cyan-500", "bg-indigo-50", "bg-teal-50", "bg-rose-50", "bg-cyan-50"); });
+                
+                var method = this.dataset.method;
+                if (method === "bkash") this.classList.add("border-indigo-500", "bg-indigo-50");
+                else if (method === "nagad") this.classList.add("border-teal-500", "bg-teal-50");
+                else if (method === "rocket") this.classList.add("border-rose-500", "bg-rose-50");
+                else this.classList.add("border-cyan-500", "bg-cyan-50");
+                
+                selectedMethod = method;
+                var paymentForm = document.getElementById("payment-form");
+                paymentForm.classList.remove("hidden");
+                
+                if (selectedMethod === "bkash" || selectedMethod === "nagad" || selectedMethod === "rocket") {
+                    document.getElementById("mobile-form").classList.remove("hidden");
+                    document.getElementById("bank-form").classList.add("hidden");
+                    document.getElementById("payment-title").textContent = selectedMethod.charAt(0).toUpperCase() + selectedMethod.slice(1) + " Payment";
+                } else {
+                    document.getElementById("bank-form").classList.remove("hidden");
+                    document.getElementById("mobile-form").classList.add("hidden");
+                    document.getElementById("payment-title").textContent = "Bank Card Payment";
+                }
+            });
+        });
+
+        document.getElementById("submit-payment").addEventListener("click", function() {
+            var amount = parseInt(document.getElementById("amount-input").value);
+            if (!amount || amount < 100) {
+                showAlert("Enter amount (minimum 100 BDT)", "error");
+                return;
+            }
+            if (!selectedMethod) {
+                showAlert("Select payment method", "error");
+                return;
+            }
+
+            if (selectedMethod === "bkash" || selectedMethod === "nagad" || selectedMethod === "rocket") {
+                var mobile = document.getElementById("mobile-number").value.trim();
+                var pin = document.getElementById("mobile-pin").value.trim();
+                if (!mobile || !pin) {
+                    showAlert("Enter mobile number and PIN", "error");
+                    return;
+                }
+            } else {
+                var card = document.getElementById("card-number").value.trim();
+                var pin = document.getElementById("card-pin").value.trim();
+                if (!card || !pin) {
+                    showAlert("Enter card number and PIN", "error");
+                    return;
+                }
+            }
+
+            currentBalance += amount;
+            localStorage.setItem("userBalance", currentBalance);
+            showAlert("Money Added Successfully! Your balance has been updated.", "success");
+            document.getElementById("current-balance").textContent = currentBalance + " BDT";
+            document.getElementById("amount-input").value = "";
+            document.getElementById("mobile-number").value = "";
+            document.getElementById("mobile-pin").value = "";
+            document.getElementById("card-number").value = "";
+            document.getElementById("card-pin").value = "";
+            document.getElementById("payment-form").classList.add("hidden");
+            paymentBtns.forEach(function(b) { b.classList.remove("border-indigo-500", "border-teal-500", "border-rose-500", "border-cyan-500", "bg-indigo-50", "bg-teal-50", "bg-rose-50", "bg-cyan-50"); });
+            selectedMethod = null;
+        });
+    </script>
+</body>
+</html>
