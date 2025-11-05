@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartShop - সেরা পণ্য, এক ক্লিকে</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100">
+    <!-- NAVBAR -->
+    <nav class="sticky top-0 bg-slate-800/80 backdrop-blur-xl shadow-lg z-50 border-b border-slate-700/40">
+        <div class="max-w-7xl mx-auto px-4 py-5 flex justify-between items-center">
+            <h1 class="text-3xl font-black bg-gradient-to-r from-violet-400 to-amber-400 bg-clip-text text-transparent tracking-tight">SmartShop</h1>
+            
+            <div class="hidden md:flex gap-10 absolute left-1/2 transform -translate-x-1/2">
+                <a href="#home" class="text-slate-300 font-semibold hover:text-violet-400 transition-all duration-300 relative group">Home<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-400 to-amber-400 group-hover:w-full transition-all duration-300"></span></a>
+                <a href="#products" class="text-slate-300 font-semibold hover:text-violet-400 transition-all duration-300 relative group">Products<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-400 to-amber-400 group-hover:w-full transition-all duration-300"></span></a>
+                <a href="#reviews" class="text-slate-300 font-semibold hover:text-violet-400 transition-all duration-300 relative group">Reviews<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-400 to-amber-400 group-hover:w-full transition-all duration-300"></span></a>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <a href="balance.html" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-6 py-2.5 rounded-xl font-bold shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 text-sm">💰 Balance</a>
+                <a href="login.html" id="login-btn" class="text-slate-300 font-semibold hover:text-violet-400 transition-colors duration-300">Login</a>
+                <button id="cart-btn" class="bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 text-white px-4 py-2.5 rounded-xl font-bold shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200">
+                    🛒 (<span id="cart-count">0</span>)
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Alert container -->
+    <div id="alert-container" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 space-y-2"></div>
+
+
+    <!-- BANNER -->
+    <section id="home" class="bg-gradient-to-br from-violet-900 via-purple-800 to-amber-900 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="bg-slate-800/95 backdrop-blur-md rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 border border-slate-700/50">
+                <div class="flex flex-col md:flex-row gap-8 p-10">
+                    <div class="md:w-2/3">
+                        <img id="banner-product-img" src="/placeholder.svg?height=300&width=500" alt="Banner Product" class="w-full h-64 object-cover rounded-2xl hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="md:w-1/3 flex flex-col justify-between text-slate-100">
+                        <div>
+                            <p class="text-xs font-bold text-amber-400 mb-2 uppercase tracking-widest">Featured Collection</p>
+                            <h3 id="banner-product-title" class="text-3xl font-black mb-4 line-clamp-3">Premium Product</h3>
+                            <p id="banner-product-price" class="text-5xl font-black bg-gradient-to-r from-violet-400 to-amber-400 bg-clip-text text-transparent mb-4">0 BDT</p>
+                            <p id="banner-product-rating" class="text-amber-400 text-lg mb-8 font-bold">⭐ 0</p>
+                        </div>
+                        <button id="banner-shop-btn" class="w-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white py-4 rounded-xl font-bold shadow-lg hover:shadow-xl active:scale-95 transition-all duration-200 hover:scale-105 text-lg">Explore Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex justify-center gap-4 mt-10">
+                <button id="prev-banner" class="bg-slate-700/90 hover:bg-slate-600 text-violet-400 px-8 py-3 rounded-xl font-bold transition-all duration-300 hover:shadow-lg active:scale-95 hover:scale-105 shadow-md">← Prev</button>
+                <span id="banner-indicator" class="text-white font-bold text-center px-6 py-3 bg-slate-700/50 backdrop-blur-sm rounded-xl">1 / 4</span>
+                <button id="next-banner" class="bg-slate-700/90 hover:bg-slate-600 text-violet-400 px-8 py-3 rounded-xl font-bold transition-all duration-300 hover:shadow-lg active:scale-95 hover:scale-105 shadow-md">Next →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEARCH -->
+    <section class="bg-slate-800/70 backdrop-blur-xl py-6 border-b border-slate-700/40 sticky top-16 z-40">
+        <div class="max-w-7xl mx-auto px-4">
+            <input 
+                type="text" 
+                id="search-input" 
+                placeholder="Search premium products..." 
+                class="w-full px-6 py-4 border-2 border-slate-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/60 backdrop-blur-sm font-semibold text-slate-100 placeholder-slate-400"
+            >
+        </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="products" class="max-w-7xl mx-auto px-4 py-20">
+        <h2 class="text-5xl font-black text-center mb-4 bg-gradient-to-r from-violet-400 to-amber-400 bg-clip-text text-transparent">Curated Collection</h2>
+        <p class="text-center text-slate-400 mb-16 text-lg font-semibold">Discover our handpicked premium products</p>
+        <div id="products-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Products loaded by JavaScript -->
+        </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews" class="bg-slate-800 py-20">
+        <div class="max-w-2xl mx-auto px-4">
+            <h2 class="text-4xl font-black text-center mb-4 text-slate-100">Customer Love</h2>
+            <p class="text-center text-slate-400 mb-12 text-lg font-semibold">Hear from our satisfied shoppers</p>
+            <div class="bg-slate-700/50 backdrop-blur-xl rounded-3xl shadow-2xl p-12 text-center border border-slate-600/50">
+                <!-- Review 1 -->
+                <div class="review-item" data-index="0">
+                    <p class="text-xl font-semibold mb-6 text-slate-100 leading-relaxed">"স্মার্টশপের প্রোডাক্ট কোয়ালিটি সত্যিই চমৎকার।"</p>
+                    <p class="text-amber-400 text-lg mb-4 font-bold">⭐⭐⭐⭐⭐</p>
+                    <p class="font-bold text-slate-100 mb-2">Amzad Hossen</p>
+                    <p class="text-slate-400 text-sm mb-8">2024-10-20</p>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-item hidden" data-index="1">
+                    <p class="text-xl font-semibold mb-6 text-slate-100 leading-relaxed">"দ্রুত ডেলিভারি আর সুন্দর সার্ভিস, খুব ভালো লেগেছে।"</p>
+                    <p class="text-amber-400 text-lg mb-4 font-bold">⭐⭐⭐⭐⭐</p>
+                    <p class="font-bold text-slate-100 mb-2">Ashraful Islam</p>
+                    <p class="text-slate-400 text-sm mb-8">2024-10-18</p>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="review-item hidden" data-index="2">
+                    <p class="text-xl font-semibold mb-6 text-slate-100 leading-relaxed">"ওয়েবসাইটের ডিজাইন দারুন, ব্যবহার করতেও সহজ।"</p>
+                    <p class="text-amber-400 text-lg mb-4 font-bold">⭐⭐⭐⭐⭐</p>
+                    <p class="font-bold text-slate-100 mb-2">Sami Ishmam</p>
+                    <p class="text-slate-400 text-sm mb-8">2024-10-15</p>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="review-item hidden" data-index="3">
+                    <p class="text-xl font-semibold mb-6 text-slate-100 leading-relaxed">"প্রথমবার ব্যবহার করে ভালো লেগেছে, আবার কিনব ইনশাআল্লাহ।"</p>
+                    <p class="text-amber-400 text-lg mb-4 font-bold">⭐⭐⭐⭐⭐</p>
+                    <p class="font-bold text-slate-100 mb-2">Imtiaz Royhan</p>
+                    <p class="text-slate-400 text-sm mb-8">2024-10-12</p>
+                </div>
+
+                <!-- Review 5 -->
+                <div class="review-item hidden" data-index="4">
+                    <p class="text-xl font-semibold mb-6 text-slate-100 leading-relaxed">"প্রোডাক্ট দের দামের তুলনায় কোয়ালিটি খুব ভালো।"</p>
+                    <p class="text-amber-400 text-lg mb-4 font-bold">⭐⭐⭐⭐⭐</p>
+                    <p class="font-bold text-slate-100 mb-2">Ibrahim Khalilullah</p>
+                    <p class="text-slate-400 text-sm mb-8">2024-10-10</p>
+                </div>
+
+                <!-- Review 6 -->
+                <div class="review-item hidden" data-index="5">
+                    <p class="text-xl font-semibold mb-6 text-slate-100 leading-relaxed">"ফ্রন্টএন্ড ডিজাইন করতে পেরে আমি আনন্দিত, ধন্যবাদ সবাইকে।"</p>
+                    <p class="text-amber-400 text-lg mb-4 font-bold">⭐⭐⭐⭐⭐</p>
+                    <p class="font-bold text-slate-100 mb-2">Shalman Ahmed Nizum</p>
+                    <p class="text-slate-400 text-sm mb-8">2024-10-05</p>
+                </div>
+
+                <!-- Review 7 -->
+                <div class="review-item hidden" data-index="6">
+                    <p class="text-xl font-semibold mb-6 text-slate-100 leading-relaxed">"ফ্রন্টএন্ড ডিজাইন করতে পেরে আমি আনন্দিত, ধন্যবাদ সবাইকে।"</p>
+                    <p class="text-amber-400 text-lg mb-4 font-bold">⭐⭐⭐⭐⭐</p>
+                    <p class="font-bold text-slate-100 mb-2">Shalman Ahmed Nizum</p>
+                    <p class="text-slate-400 text-sm mb-8">2024-10-01</p>
+                </div>
+
+                <div class="flex justify-center gap-4 pt-8 border-t border-slate-600/50">
+                    <button id="prev-review" class="bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 text-white px-8 py-3 rounded-xl font-bold transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-lg">← Prev</button>
+                    <span id="review-indicator" class="font-bold text-slate-100 text-center px-6 py-3 bg-slate-700/50 backdrop-blur-sm rounded-xl">1 / 7</span>
+                    <button id="next-review" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-8 py-3 rounded-xl font-bold transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-lg">Next →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+     <!-- Added "Get in Touch" button in footer -->
+            <div class="flex justify-center mt-12">
+                <button id="contact-btn" class="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl active:scale-95 transition-all duration-200 hover:scale-105 text-lg">Get in Touch</button>
+           
+            </div>
+    <!-- CONTACT
+    <section id="contact" class="max-w-2xl mx-auto px-4 py-20">
+        <h2 class="text-4xl font-black text-center mb-4 bg-gradient-to-r from-violet-400 to-amber-400 bg-clip-text text-transparent">Get in Touch</h2>
+        <p class="text-center text-slate-400 mb-12 text-lg font-semibold">We'd love to hear from you</p>
+        <form id="contact-form" class="bg-slate-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-12 border border-slate-700/50">
+            <div class="mb-8">
+                <label class="block text-sm font-bold mb-3 text-slate-100">Name</label>
+                <input type="text" id="contact-name" placeholder="Your full name" class="w-full px-6 py-4 border-2 border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/70 font-semibold text-slate-100 placeholder-slate-400" required>
+            </div>
+            <div class="mb-8">
+                <label class="block text-sm font-bold mb-3 text-slate-100">Email</label>
+                <input type="email" id="contact-email" placeholder="your@email.com" class="w-full px-6 py-4 border-2 border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/70 font-semibold text-slate-100 placeholder-slate-400" required>
+            </div>
+            <div class="mb-8">
+                <label class="block text-sm font-bold mb-3 text-slate-100">Message</label>
+                <textarea id="contact-message" placeholder="Your message" rows="5" class="w-full px-6 py-4 border-2 border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/70 font-semibold text-slate-100 placeholder-slate-400" required></textarea>
+            </div>
+            <button type="submit" class="w-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white py-4 rounded-xl font-bold shadow-lg hover:shadow-xl active:scale-95 transition-all duration-200 hover:scale-105 text-lg">Send Message</button>
+        </form>
+        <p id="contact-success" class="text-emerald-400 font-bold text-center mt-8 hidden text-lg"></p>
+    </section> -->
+
+    <!-- FOOTER -->
+    <h1> .</h1>
+    <footer class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-slate-100 py-16 border-t border-slate-700/50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <div>
+                    <h3 class="text-2xl font-black bg-gradient-to-r from-violet-400 to-amber-400 bg-clip-text text-transparent mb-3">SmartShop</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed font-semibold">Your destination for premium, curated online shopping experiences.</p>
+                </div>
+                <div>
+                    <h4 class="font-black mb-5 text-lg text-slate-100">Quick Links</h4>
+                    <ul class="text-slate-400 text-sm space-y-3 font-semibold">
+                        <li><a href="#home" class="hover:text-amber-400 transition-colors duration-300">Home</a></li>
+                        <li><a href="#products" class="hover:text-amber-400 transition-colors duration-300">Products</a></li>
+                        <li><a href="#reviews" class="hover:text-amber-400 transition-colors duration-300">Reviews</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-5 text-lg">Follow Us</h4>
+                    <div class="flex gap-6">
+                        <a href="#" class="text-gray-400 hover:text-blue-500 transition duration-200">
+    <!-- Facebook -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M22 12.07C22 6.48 17.52 2 11.93 2S1.86 6.48 1.86 12.07c0 4.94 3.63 9.04 8.39 9.87v-6.99H7.9v-2.88h2.35V9.41c0-2.32 1.38-3.61 3.49-3.61.99 0 2.02.18 2.02.18v2.22h-1.14c-1.13 0-1.48.7-1.48 1.42v1.7h2.52l-.4 2.88h-2.12v6.99c4.77-.83 8.4-4.93 8.4-9.87z"/>
+    </svg>
+</a>
+
+<a href="#" class="text-gray-400 hover:text-pink-500 transition duration-200">
+    <!-- Instagram -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M7.75 2C4.57 2 2 4.57 2 7.75v8.5C2 19.43 4.57 22 7.75 22h8.5c3.18 0 5.75-2.57 5.75-5.75v-8.5C22 4.57 19.43 2 16.25 2h-8.5zM12 7.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8zm6.4-.75a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM12 9.4a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2z"/>
+    </svg>
+</a>
+
+<a href="https://github.com/AeroMSK/Smart_Shop_Tools_Mid_Project" class="text-gray-400 hover:text-gray-300 transition duration-200">
+    <!-- GitHub -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.52 2.87 8.36 6.84 9.72.5.09.68-.22.68-.49v-1.72c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.49-1.1-1.49-.9-.63.07-.62.07-.62 1 .07 1.52 1.06 1.52 1.06.88 1.55 2.31 1.1 2.88.84.09-.65.35-1.1.64-1.35-2.22-.26-4.56-1.15-4.56-5.14 0-1.14.39-2.07 1.03-2.8-.1-.26-.45-1.31.1-2.73 0 0 .85-.28 2.78 1.06a9.27 9.27 0 0 1 5.06 0c1.93-1.34 2.78-1.06 2.78-1.06.55 1.42.2 2.47.1 2.73.64.73 1.03 1.66 1.03 2.8 0 4-2.34 4.88-4.57 5.14.36.32.69.95.69 1.93v2.86c0 .27.18.59.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/>
+    </svg>
+</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700/50 pt-8">
+                <p class="text-center text-white font-bold mb-4">Design & Developed by Musa Khan and Shalman Ahmed</p>
+                <div class="text-center text-slate-300 text-sm space-y-2 mb-6">
+                    <p>Shalman Ahmed – Frontend & UI Design(Hover Special)</p>
+                    <p>Musa Khan – Backend & Frontend Support</p>
+                   
+                </div>
+                
+                <div class="flex justify-center items-center gap-6 mb-4">
+        <!-- Musa Image -->
+        <div class="w-20 h-20">
+            <img src="images/musa.jpg" alt="Shalman Ahmed" class="w-full h-full object-cover rounded-md">
+        </div>
+        <!-- Shalman Image -->
+        <div class="w-20 h-20">
+            <img src="images/shalman.jpg" alt="Musa Khan" class="w-full h-full object-cover rounded-md">
+        </div>
+    </div>
+                <div class="border-t border-slate-700/50 pt-6">
+                    <p class="text-slate-400 text-sm text-center">&copy; 2025 SmartShop. All rights reserved.</p>
+                </div>
+            </div>
+
+           
+        </div>
+    </footer>
+
+    <!-- CART SIDEBAR -->
+    <!-- Added delivery location input section above checkout button -->
+    <div id="cart-sidebar" class="fixed right-0 top-0 w-96 h-screen bg-slate-800/95 backdrop-blur-xl shadow-2xl transform translate-x-full transition-transform duration-300 z-40 overflow-y-auto border-l border-slate-700/50">
+        <div class="p-8">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-black text-slate-100">Shopping Cart</h2>
+                <button id="close-cart" class="text-3xl text-slate-400 hover:text-slate-100 transition-colors">✕</button>
+            </div>
+            
+            <div id="cart-items" class="space-y-4 mb-8">
+                <p class="text-slate-400 text-center font-semibold">Your cart is empty</p>
+            </div>
+            
+            <div class="border-t-2 border-slate-700 pt-6 space-y-3 mb-8">
+                <div class="flex justify-between text-slate-300">
+                    <span class="font-semibold">Subtotal:</span>
+                    <span id="subtotal" class="font-bold">0 BDT</span>
+                </div>
+                <div class="flex justify-between text-slate-300">
+                    <span class="font-semibold">Delivery:</span>
+                    <span id="delivery" class="font-bold">50 BDT</span>
+                </div>
+                <div class="flex justify-between text-slate-300">
+                    <span class="font-semibold">Discount:</span>
+                    <span id="discount" class="font-bold text-amber-400">0 BDT</span>
+                </div>
+                <div class="flex justify-between font-bold text-lg border-t-2 border-slate-700 pt-4 text-slate-100">
+                    <span>Total:</span>
+                    <span id="total">0 BDT</span>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-bold mb-3 text-slate-100">Promo Code</label>
+                <div class="flex gap-2">
+                    <input type="text" id="coupon-input" placeholder="SHALMANMUSA10" class="flex-1 px-4 py-3 border-2 border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/70 font-semibold text-slate-100 placeholder-slate-400">
+                    <button id="apply-coupon" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-6 py-3 rounded-xl font-bold transition-all duration-300 hover:scale-105 active:scale-95">Apply</button>
+                </div>
+            </div>
+
+            <!-- Delivery location input section -->
+            <div class="mb-6">
+                <label class="block text-sm font-bold mb-3 text-slate-100">Delivery Location</label>
+                <div class="flex gap-2">
+                    <select id="delivery-location" class="flex-1 px-4 py-3 border-2 border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/70 font-semibold text-slate-100">
+                        <option value="">Select location</option>
+                        <option value="Dhaka">Dhaka</option>
+                        <option value="Chittagong">Chittagong</option>
+                        <option value="Sylhet">Sylhet</option>
+                        <option value="Rajshahi">Rajshahi</option>
+                        <option value="Khulna">Khulna</option>
+                    </select>
+                </div>
+                <div id="location-error" class="hidden bg-rose-600 text-white px-4 py-2 rounded-md text-sm font-semibold mt-2"></div>
+            </div>
+            
+            <button id="checkout-btn" class="w-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white py-4 rounded-xl font-bold shadow-lg hover:shadow-xl active:scale-95 transition-all duration-200 hover:scale-105 text-lg">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Success message container (hidden by default) -->
+    <div id="success-message-container" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300">
+        <div class="bg-gradient-to-br from-green-600 to-emerald-600 text-white font-semibold text-center p-8 rounded-2xl shadow-2xl max-w-md w-full border border-green-500/50">
+            <h3 class="text-3xl font-black mb-4">Thanks for Shopping!</h3>
+            <p class="text-lg mb-6">Your order has been confirmed.</p>
+            <p id="order-id-text" class="text-2xl font-black mb-4">Order ID: #SM00000</p>
+            <p class="text-lg mb-6">Your order will be delivered on time.</p>
+            <button id="close-success-btn" class="bg-white text-green-600 px-8 py-3 rounded-lg font-bold hover:bg-slate-100 transition-all duration-200 hover:scale-105 active:scale-95">Close</button>
+        </div>
+    </div>
+
+    <!-- Contact modal overlay (hidden by default) -->
+    <div id="contact-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4 transition-opacity duration-300">
+        <div class="bg-slate-800/95 backdrop-blur-xl rounded-3xl shadow-2xl p-12 border border-slate-700/50 max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0 -translate-y-4" id="contact-modal">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-4xl font-black bg-gradient-to-r from-violet-400 to-amber-400 bg-clip-text text-transparent">Get in Touch</h2>
+                <button id="close-contact" class="text-3xl text-slate-400 hover:text-slate-100 transition-colors">✕</button>
+            </div>
+            <p class="text-slate-400 mb-12 text-lg font-semibold">We'd love to hear from you</p>
+            <form id="contact-form" class="space-y-8">
+                <div>
+                    <label class="block text-sm font-bold mb-3 text-slate-100">Name</label>
+                    <input type="text" id="contact-name" placeholder="Your full name" class="w-full px-6 py-4 border-2 border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/70 font-semibold text-slate-100 placeholder-slate-400" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-3 text-slate-100">Email</label>
+                    <input type="email" id="contact-email" placeholder="your@email.com" class="w-full px-6 py-4 border-2 border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/70 font-semibold text-slate-100 placeholder-slate-400" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-3 text-slate-100">Message</label>
+                    <textarea id="contact-message" placeholder="Your message" rows="5" class="w-full px-6 py-4 border-2 border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/70 font-semibold text-slate-100 placeholder-slate-400" required></textarea>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white py-4 rounded-xl font-bold shadow-lg hover:shadow-xl active:scale-95 transition-all duration-200 hover:scale-105 text-lg">Send Message</button>
+            </form>
+            <p id="contact-success" class="text-emerald-400 font-bold text-center mt-8 hidden text-lg"></p>
+        </div>
+    </div>
+
+    <div id="cart-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-30 transition-opacity duration-300"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

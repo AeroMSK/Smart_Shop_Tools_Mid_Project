@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartShop - Premium Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+</head>
+<!-- Updated body to dark theme -->
+<body class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 flex items-center justify-center min-h-screen p-4">
+    <div id="alert-container" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 space-y-2"></div>
+
+
+    <div class="w-full max-w-md bg-slate-800/90 backdrop-blur-xl rounded-3xl shadow-2xl p-12 border border-slate-700/50">
+        <h1 class="text-4xl font-black bg-gradient-to-r from-violet-400 to-amber-400 bg-clip-text text-transparent mb-2 text-center">SmartShop</h1>
+        <p class="text-slate-400 text-center mb-10 font-semibold">Premium shopping experience awaits</p>
+        
+        <!-- Updated tabs with dark theme -->
+        <div class="flex gap-3 mb-8 bg-slate-700 p-1.5 rounded-xl">
+            <button id="login-tab" class="flex-1 py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-lg font-bold transition-all duration-300 hover:shadow-lg active:scale-95">Login</button>
+            <button id="signup-tab" class="flex-1 py-3 bg-transparent text-slate-400 rounded-lg font-bold hover:bg-slate-600/60 transition-all duration-300">Signup</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form id="login-form" class="space-y-5">
+            <div>
+                <label class="block text-sm font-bold mb-3 text-slate-100">Email Address</label>
+                <input type="email" id="login-email" placeholder="you@example.com" class="w-full px-5 py-4 border-2 border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/70 font-semibold text-slate-100 placeholder-slate-400" required>
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-3 text-slate-100">Password</label>
+                <input type="password" id="login-password" placeholder="••••••••" class="w-full px-5 py-4 border-2 border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/70 font-semibold text-slate-100 placeholder-slate-400" required>
+            </div>
+            <button type="submit" class="w-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white py-4 rounded-xl font-bold hover:shadow-lg active:scale-95 transition-all duration-200 hover:scale-105 text-lg">Sign In</button>
+        </form>
+
+        <!-- SIGNUP FORM -->
+        <form id="signup-form" class="space-y-5 hidden">
+            <div>
+                <label class="block text-sm font-bold mb-3 text-slate-100">Full Name</label>
+                <input type="text" id="signup-name" placeholder="Your name" class="w-full px-5 py-4 border-2 border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/70 font-semibold text-slate-100 placeholder-slate-400" required>
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-3 text-slate-100">Email Address</label>
+                <input type="email" id="signup-email" placeholder="you@example.com" class="w-full px-5 py-4 border-2 border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/70 font-semibold text-slate-100 placeholder-slate-400" required>
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-3 text-slate-100">Password</label>
+                <input type="password" id="signup-password" placeholder="Create password" class="w-full px-5 py-4 border-2 border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all bg-slate-700/70 font-semibold text-slate-100 placeholder-slate-400" required>
+            </div>
+            <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white py-4 rounded-xl font-bold hover:shadow-lg active:scale-95 transition-all duration-200 hover:scale-105 text-lg">Create Account</button>
+        </form>
+
+        <p class="text-center text-slate-400 text-sm mt-8 font-semibold">Any email and password works for demo</p>
+        <p class="text-center mt-6"><a href="index.html" class="text-violet-400 hover:text-amber-400 font-bold transition-colors duration-300 text-lg">← Back to Store</a></p>
+    </div>
+
+    <script>
+        function showAlert(message, type = 'success') {
+          var alertContainer = document.getElementById('alert-container')
+          var bgColor = type === 'success' ? 'bg-emerald-500' : 'bg-rose-600'
+          
+          var alertDiv = document.createElement('div')
+          alertDiv.className = bgColor + ' text-white px-6 py-4 rounded-xl shadow-xl transform transition-all duration-500 opacity-0 translate-y-2'
+          alertDiv.textContent = message
+          
+          alertContainer.appendChild(alertDiv)
+          
+          setTimeout(() => {
+            alertDiv.classList.remove("opacity-0", "translate-y-2")
+            alertDiv.classList.add("opacity-100", "translate-y-0")
+          }, 10)
+
+          setTimeout(() => {
+            alertDiv.classList.add("opacity-0", "translate-y-2")
+            setTimeout(() => alertDiv.remove(), 500)
+          }, 3500)
+        }
+
+        document.getElementById("login-tab").addEventListener("click", function() {
+            document.getElementById("login-form").classList.remove("hidden");
+            document.getElementById("signup-form").classList.add("hidden");
+            this.classList.add("bg-gradient-to-r", "from-violet-600", "to-purple-600", "text-white");
+            this.classList.remove("bg-transparent", "text-slate-400");
+            document.getElementById("signup-tab").classList.remove("bg-gradient-to-r", "from-amber-500", "to-orange-500", "text-white");
+            document.getElementById("signup-tab").classList.add("bg-transparent", "text-slate-400");
+        });
+
+        document.getElementById("signup-tab").addEventListener("click", function() {
+            document.getElementById("signup-form").classList.remove("hidden");
+            document.getElementById("login-form").classList.add("hidden");
+            this.classList.add("bg-gradient-to-r", "from-amber-500", "to-orange-500", "text-white");
+            this.classList.remove("bg-transparent", "text-slate-400");
+            document.getElementById("login-tab").classList.remove("bg-gradient-to-r", "from-violet-600", "to-purple-600", "text-white");
+            document.getElementById("login-tab").classList.add("bg-transparent", "text-slate-400");
+        });
+
+        document.getElementById("login-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            var email = document.getElementById("login-email").value.trim();
+            if (!email) return;
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("userEmail", email);
+            localStorage.setItem("userName", email.split("@")[0]);
+            showAlert("Welcome back to SmartShop!", "success");
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 1000);
+        });
+
+        document.getElementById("signup-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            var name = document.getElementById("signup-name").value.trim();
+            var email = document.getElementById("signup-email").value.trim();
+            if (!name || !email) return;
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("userEmail", email);
+            localStorage.setItem("userName", name);
+            showAlert("Welcome to SmartShop!", "success");
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
